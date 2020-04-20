@@ -1,6 +1,6 @@
 package com.cbat.exceptionhandler.util;
 
-import com.cbat.exceptionhandler.Bean.Response;
+import com.cbat.exceptionhandler.bean.Response;
 import com.cbat.exceptionhandler.config.CbatExceptionReader;
 
 public class ResponseUtil {

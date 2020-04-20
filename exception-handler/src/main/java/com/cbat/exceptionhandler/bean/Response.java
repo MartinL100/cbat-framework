@@ -1,4 +1,4 @@
-package com.cbat.exceptionhandler.Bean;
+package com.cbat.exceptionhandler.bean;
 
 public class Response {
     private String msg;

@@ -1,6 +1,6 @@
 package com.cbat.exceptionhandler.controller;
 
-import com.cbat.exceptionhandler.Bean.Response;
+import com.cbat.exceptionhandler.bean.Response;
 import com.cbat.exceptionhandler.util.CbatException;
 import com.cbat.exceptionhandler.util.ResponseUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
