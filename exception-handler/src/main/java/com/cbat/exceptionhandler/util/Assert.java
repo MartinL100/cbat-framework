@@ -4,6 +4,7 @@ package com.cbat.exceptionhandler.util;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class Assert {
     /**
@@ -26,6 +27,19 @@ public class Assert {
             if (str== null||"".equals(str)) {
                 throw new CbatException(code);
             }
+
+
+    }
+
+    /**
+     * 集合不能为空
+     * @param code 错误码
+     * @param list
+     */
+    public static void notNull(List list, @NotNull String code ){
+        if (null == list ||0 == list.size()) {
+            throw new CbatException(code);
+        }
 
 
     }

@@ -1,9 +1,12 @@
 package com.cbat.usermanager.service.impl;
 
 
+import com.cbat.exceptionhandler.util.Assert;
 import com.cbat.usermanager.bean.RoleBean;
+import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.dao.RoleRepository;
 import com.cbat.usermanager.service.IRoleService;
+import com.cbat.usermanager.service.IUserToRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ import java.util.List;
 public class RoleServiceImpl implements IRoleService {
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    IUserToRoleService userToRoleService;
     @Override
     public List<RoleBean> findByUserId(String userId) {
 
@@ -22,5 +27,12 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public void addRole(RoleBean roleBean) {
         roleRepository.save(roleBean);
+    }
+
+    @Override
+    public void del(String roleId) {
+        List<UserBean> users = userToRoleService.findUsersByRoleId(roleId);
+        Assert.notNull(users,"E00000012");
+        roleRepository.deleteById(roleId);
     }
 }

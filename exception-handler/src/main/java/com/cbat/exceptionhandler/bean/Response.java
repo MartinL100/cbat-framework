@@ -5,6 +5,8 @@ public class Response {
     private String code;
     private Object data;
     private Boolean statu;
+    /**分页查询时数据总数*/
+    private long count;
 
     public Boolean getStatu() {
         return statu;
@@ -36,5 +38,13 @@ public class Response {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 }

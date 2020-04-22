@@ -34,4 +34,9 @@ public class UserServiceImpl implements IUserService {
         Assert.notEmpty(userBean.getUserName(),"E00000004");
         userRepository.save(userBean);
     }
+
+    @Override
+    public void del(String  userId) {
+        userRepository.deleteById(userId);
+    }
 }

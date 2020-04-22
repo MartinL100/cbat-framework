@@ -6,14 +6,15 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
-@Configuration
+
+//@Configuration
 public class CustmFilter extends ShiroFilterConfig {
 
     @Override
     public void customInitFilter(Map shiroFilterMap) {
 //        shiroFilterMap.put("/**","authc");
 //        shiroFilterMap.put("/login","anon");
-        shiroFilterMap = null;
+//        shiroFilterMap = null;
     }
 
     @Override

@@ -14,6 +14,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
  */
 
 public class UserRealm extends AuthorizingRealm {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private IUserService userService;
     @Autowired
@@ -32,6 +35,7 @@ public class UserRealm extends AuthorizingRealm {
     private IPermisService permisService;
     @Autowired
     private ShiroFilterConfig shiroFilterConfig;
+
     /**
      * 用户授权
      * @param principalCollection
@@ -39,27 +43,32 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        logger.info("开始执行用户授权");
         Subject subject = SecurityUtils.getSubject();
         /**利用session减少数据库穿透次数*/
         Object authorizationInfo = subject.getSession().getAttribute("simpleAuthorizationInfo");
         if (null!=authorizationInfo){
             return (AuthorizationInfo) authorizationInfo;
         }
-        System.out.println("执行认证查询");
+        logger.info("开始执行用户授权数据库查询");
         UserBean userBean = (UserBean) subject.getPrincipal();
         List<RoleBean> roleBeans = roleService.findByUserId(userBean.getUserId());
         List<PermissionBean>permissionBeans= new ArrayList<PermissionBean>();
         for (RoleBean r:roleBeans) {
             List<PermissionBean> permises = permisService.getPermises(r.getRoleId());
-            if(null!=permises)
-            permissionBeans.addAll(permises) ;
+            if(null!=permises&&0!=permises.size()){
+                permissionBeans.addAll(permises) ;
+            }
+
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
         if(null!=roleBeans){
             for (RoleBean r:roleBeans) {
                 info.addRole(r.getRoleName());
             }
         }
+        /**添加认证Permiss*/
         if(null!=permissionBeans){
             for (PermissionBean p: permissionBeans) {
                 info.addStringPermission(p.getPermissionUrl());
@@ -80,7 +89,7 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("执行认证操作");
+        logger.info("开始执行认证操作");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         UserBean user = userService.findByUserName(token.getUsername());
         if(null == user){

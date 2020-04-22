@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.annotation.Resource;
 import java.util.Map;
-
+@PropertySource("classpath:cbat-application.properties")
 @Configuration
 public class ShrioConfig {
-    @Value("${cbat.url.login}")
+    @Value("${cbat.usermanager.url.login}")
     private String loginUrl ;
-    @Value("${cbat.url.authorized}")
+    @Value("${cbat.usermanager.url.authorized}")
     private String authorizedUrl ;
     @Resource(name = "shiroFilterMap")
     private Map<String,String> shiroFilterMap;

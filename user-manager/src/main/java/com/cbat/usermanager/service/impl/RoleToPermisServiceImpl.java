@@ -8,6 +8,8 @@ import com.cbat.usermanager.service.IRoleToPermisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleToPermisServiceImpl implements IRoleToPermisService {
     @Autowired
@@ -24,5 +26,15 @@ public class RoleToPermisServiceImpl implements IRoleToPermisService {
         Assert.notEmpty(roleToPermisBean.getRoleId(),"E00000001");
         Assert.notEmpty(roleToPermisBean.getPermissionId(),"E00000002");
         repository.delete(roleToPermisBean);
+    }
+
+    @Override
+    public void addAll(List<RoleToPermisBean> roleToPermisBeans) {
+        repository.saveAll(roleToPermisBeans);
+    }
+
+    @Override
+    public List<RoleToPermisBean> findByPermisId(String permissionId) {
+        return repository.findByPermissionId(permissionId);
     }
 }
