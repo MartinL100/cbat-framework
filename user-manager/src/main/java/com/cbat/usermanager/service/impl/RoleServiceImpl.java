@@ -4,6 +4,7 @@ package com.cbat.usermanager.service.impl;
 import com.cbat.exceptionhandler.util.Assert;
 import com.cbat.usermanager.bean.RoleBean;
 import com.cbat.usermanager.bean.UserBean;
+import com.cbat.usermanager.bean.UserToRoleBean;
 import com.cbat.usermanager.dao.RoleRepository;
 import com.cbat.usermanager.service.IRoleService;
 import com.cbat.usermanager.service.IUserToRoleService;
@@ -31,8 +32,8 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public void del(String roleId) {
-        List<UserBean> users = userToRoleService.findUsersByRoleId(roleId);
-        Assert.notNull(users,"E00000012");
+        List<UserToRoleBean> userToRoles = userToRoleService.findByRoleId(roleId);
+        Assert.notNull(userToRoles,"E00000012");
         roleRepository.deleteById(roleId);
     }
 }

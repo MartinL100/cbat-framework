@@ -7,9 +7,11 @@ import com.cbat.exceptionhandler.util.ResponseUtil;
 import com.cbat.usermanager.bean.PermissionBean;
 import com.cbat.usermanager.bean.RoleBean;
 import com.cbat.usermanager.bean.RoleToPermisBean;
+import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.service.IPermisService;
 import com.cbat.usermanager.service.IRoleService;
 import com.cbat.usermanager.service.IRoleToPermisService;
+import com.cbat.usermanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,8 @@ public class RoleController {
     IPermisService permisService;
     @Autowired
     IRoleToPermisService roleToPermisService;
+    @Autowired
+    IUserService userService;
     @RequestMapping(value = "/addRole",name = "添加角色")
     public Response addRole(RoleBean roleBean){
         Assert.notEmpty(roleBean.getRoleName(),"E00000010");
@@ -55,8 +59,8 @@ public class RoleController {
     @RequestMapping(value = "/findUsersByRoleId",name = "查询拥有该角色的所有用户")
     public Response findUsersByRoleId(String roleId){
         Assert.notEmpty(roleId,"E00000001");
-        //todo
-        return ResponseUtil.success();
+        List<UserBean> users = userService.getUsersByRoleId(roleId);
+        return ResponseUtil.success(users);
     }
 
 }

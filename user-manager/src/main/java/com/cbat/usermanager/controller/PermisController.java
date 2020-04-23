@@ -5,8 +5,10 @@ import com.cbat.exceptionhandler.bean.Response;
 import com.cbat.exceptionhandler.util.Assert;
 import com.cbat.exceptionhandler.util.ResponseUtil;
 import com.cbat.usermanager.bean.PermissionBean;
+import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.service.IPermisService;
 import com.cbat.usermanager.service.IRoleToPermisService;
+import com.cbat.usermanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,8 @@ public class PermisController {
     private IPermisService permisService;
     @Autowired
     WebApplicationContext applicationContext;
+    @Autowired
+    IUserService userService;
     @RequestMapping(value = "/addPermis",name = "添加资源")
     public Response addPermis(PermissionBean permissionBean){
         Assert.notEmpty(permissionBean.getPermissionName(),"E00000008");
@@ -65,7 +69,6 @@ public class PermisController {
     @RequestMapping(value = "/delPermis",name = "删除资源")
     public Response delPermis(String permissionId){
         Assert.notEmpty(permissionId,"E00000002");
-
         permisService.del(permissionId);
         return ResponseUtil.success();
     }
@@ -73,7 +76,7 @@ public class PermisController {
     @RequestMapping(value = "/findUsersByPermisId",name = "查询拥有该权限的所有用户")
     public Response findUsersByPermisId(String permissionId){
         Assert.notEmpty(permissionId,"E00000002");
-        //todo
-        return ResponseUtil.success();
+        List<UserBean> users = userService.getUsersByPermissId(permissionId);
+        return ResponseUtil.success(users);
     }
 }

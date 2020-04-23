@@ -10,4 +10,7 @@ public interface IUserService {
     UserBean findByUserName(String userName);
     void addUser(UserBean userBean);
     void del(String userId);
+    List<UserBean>getUsersByRoleId(String roleId);
+    List<UserBean> getUsersByPermissId(String permissionId);
+
 }

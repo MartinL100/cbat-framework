@@ -4,6 +4,7 @@ package com.cbat.usermanager.service.impl;
 import com.cbat.exceptionhandler.util.Assert;
 import com.cbat.usermanager.bean.PermissionBean;
 import com.cbat.usermanager.bean.RoleToPermisBean;
+import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.dao.PermissionRepository;
 import com.cbat.usermanager.service.IPermisService;
 import com.cbat.usermanager.service.IRoleToPermisService;
@@ -54,4 +55,6 @@ public class PermisServiceImpl implements IPermisService {
         Assert.notNull(roleToPermisBeans,"E00000011");
         permissionRepository.deleteById(permissionId);
     }
+
+
 }

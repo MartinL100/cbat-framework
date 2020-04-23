@@ -2,6 +2,7 @@ package com.cbat.usermanager.service;
 
 
 import com.cbat.usermanager.bean.PermissionBean;
+import com.cbat.usermanager.bean.UserBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

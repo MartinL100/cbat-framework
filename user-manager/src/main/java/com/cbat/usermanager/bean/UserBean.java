@@ -66,4 +66,12 @@ public class UserBean {
     public void setTel(String tel) {
         this.tel = tel;
     }
+
+    public UserBean() {
+    }
+
+    public UserBean(String userName,String userId) {
+        this.userName = userName;
+        this.userId = userId;
+    }
 }

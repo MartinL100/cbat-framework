@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface UserToRoleRepository extends JpaRepository<UserToRoleBean,String> {
-    List<UserBean> findByRoleId(String roleId);
-    List<RoleBean> findByUserId(String userId);
+    List<UserToRoleBean> findByRoleId(String roleId);
 }

@@ -37,12 +37,9 @@ public class UserToRoleServiceImpl implements IUserToRoleService {
     }
 
     @Override
-    public List<UserBean> findUsersByRoleId(String roleId) {
+    public List<UserToRoleBean> findByRoleId(String roleId) {
         return repository.findByRoleId(roleId);
     }
 
-    @Override
-    public List<RoleBean> findRolesByUserId(String userId) {
-        return null;
-    }
+
 }

@@ -2,6 +2,7 @@ package com.cbat.usermanager.service;
 
 
 import com.cbat.usermanager.bean.RoleBean;
+import com.cbat.usermanager.bean.UserBean;
 
 import java.util.List;
 

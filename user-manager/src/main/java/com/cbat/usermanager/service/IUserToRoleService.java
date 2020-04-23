@@ -11,6 +11,5 @@ public interface IUserToRoleService {
     void add(UserToRoleBean userToRoleBean);
     void del(UserToRoleBean userToRoleBean);
     void addAll(List<UserToRoleBean> userToRoleBeans);
-    List<UserBean> findUsersByRoleId(String roleId);
-    List<RoleBean>findRolesByUserId(String userId);
+    List<UserToRoleBean> findByRoleId(String roleId);
 }
