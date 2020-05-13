@@ -19,14 +19,20 @@ public class ShrioConfig {
     private String authorizedUrl ;
     @Resource(name = "shiroFilterMap")
     private Map<String,String> shiroFilterMap;
+    @Value("${shiro.isopen}")
+    private Boolean isOpenShiro ;
     //过滤器
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager){
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(defaultWebSecurityManager);
-        factoryBean.setFilterChainDefinitionMap(shiroFilterMap);
-        factoryBean.setLoginUrl(loginUrl);
-        factoryBean.setUnauthorizedUrl(authorizedUrl);
+        if (isOpenShiro){//便于在配置文件中关闭shiro
+            factoryBean.setFilterChainDefinitionMap(shiroFilterMap);
+            factoryBean.setLoginUrl(loginUrl);
+            factoryBean.setUnauthorizedUrl(authorizedUrl);
+        }
+
+
         return factoryBean;
     }
 

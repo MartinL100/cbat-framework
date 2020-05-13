@@ -15,8 +15,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>user-manager</module>
-        <module>exception-handler</module>
         <module>cbat-core</module>
+        <module>cbat-utils</module>
+        <module>cbat-web</module>
+        <module>cbat-exception</module>
+        <module>cbat-monitor</module>
     </modules>
     <dependencies>
         <dependency>

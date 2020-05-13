@@ -1,7 +1,7 @@
 package com.cbat.usermanager.service.impl;
 
 
-import com.cbat.exceptionhandler.util.Assert;
+import com.cbat.exception.util.Assert;
 import com.cbat.usermanager.bean.RoleBean;
 import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.bean.UserToRoleBean;
@@ -33,7 +33,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public void del(String roleId) {
         List<UserToRoleBean> userToRoles = userToRoleService.findByRoleId(roleId);
-        Assert.notNull(userToRoles,"E00000012");
+        Assert.notNull(userToRoles,"还有用户拥有该角色，不能删除该角色");
         roleRepository.deleteById(roleId);
     }
 }

@@ -1,7 +1,7 @@
 package com.cbat.usermanager.service.impl;
 
 
-import com.cbat.exceptionhandler.util.Assert;
+import com.cbat.exception.util.Assert;
 import com.cbat.usermanager.bean.RoleToPermisBean;
 import com.cbat.usermanager.dao.RoleToPermisRepository;
 import com.cbat.usermanager.service.IRoleToPermisService;
@@ -16,15 +16,15 @@ public class RoleToPermisServiceImpl implements IRoleToPermisService {
     private RoleToPermisRepository repository;
     @Override
     public void add(RoleToPermisBean roleToPermisBean) {
-        Assert.notEmpty(roleToPermisBean.getRoleId(),"E00000001");
-        Assert.notEmpty(roleToPermisBean.getPermissionId(),"E00000002");
+        Assert.notEmpty(roleToPermisBean.getRoleId(),"角色编号不能为空");
+        Assert.notEmpty(roleToPermisBean.getPermissionId(),"许可编号不能为空");
         repository.save(roleToPermisBean);
     }
 
     @Override
     public void del(RoleToPermisBean roleToPermisBean) {
-        Assert.notEmpty(roleToPermisBean.getRoleId(),"E00000001");
-        Assert.notEmpty(roleToPermisBean.getPermissionId(),"E00000002");
+        Assert.notEmpty(roleToPermisBean.getRoleId(),"角色编号不能为空");
+        Assert.notEmpty(roleToPermisBean.getPermissionId(),"许可编号不能为空");
         repository.delete(roleToPermisBean);
     }
 

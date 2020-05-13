@@ -1,10 +1,10 @@
 package com.cbat.usermanager.service.impl;
 
 
-import com.cbat.exceptionhandler.util.Assert;
+import com.cbat.exception.bean.response.PageQueryResponse;
+import com.cbat.exception.util.Assert;
 import com.cbat.usermanager.bean.PermissionBean;
 import com.cbat.usermanager.bean.RoleToPermisBean;
-import com.cbat.usermanager.bean.UserBean;
 import com.cbat.usermanager.dao.PermissionRepository;
 import com.cbat.usermanager.service.IPermisService;
 import com.cbat.usermanager.service.IRoleToPermisService;
@@ -43,16 +43,16 @@ public class PermisServiceImpl implements IPermisService {
     }
 
     @Override
-    public Page<PermissionBean> pageQuery(PermissionBean permissionBean, Pageable pageable) {
+    public PageQueryResponse<PermissionBean> pageQuery(PermissionBean permissionBean, Pageable pageable) {
         Example<PermissionBean> example = Example.of(permissionBean);
         Page<PermissionBean> permiss = permissionRepository.findAll(example, pageable);
-        return permiss;
+        return new PageQueryResponse<PermissionBean>(permiss.toList(), (int) permiss.getTotalElements());
     }
 
     @Override
     public void del(String permissionId) {
         List<RoleToPermisBean> roleToPermisBeans = roleToPermisService.findByPermisId(permissionId);
-        Assert.notNull(roleToPermisBeans,"E00000011");
+        Assert.notNull(roleToPermisBeans,"还有角色拥有该权限，不能删除该权限");
         permissionRepository.deleteById(permissionId);
     }
 

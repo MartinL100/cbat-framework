@@ -1,6 +1,8 @@
 package com.cbat.usermanager.bean;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -10,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
-
+@ApiModel("角色对象")
 @Entity
 @Table(name = "t_role")
 public class RoleBean {
@@ -18,19 +20,12 @@ public class RoleBean {
     @GeneratedValue(generator = "uid")
     @GenericGenerator(strategy = "uuid",name = "uid")
     @Column(length = 32)
+    @ApiModelProperty("角色编号")
     private String roleId;
-    @Column(length = 32)
+    @Column(length = 64)
+    @ApiModelProperty("角色名称")
     private String roleName;
-    @Transient
-    private List<PermissionBean>permissions;
 
-    public List<PermissionBean> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<PermissionBean> permissions) {
-        this.permissions = permissions;
-    }
 
     public String getRoleId() {
         return roleId;

@@ -1,9 +1,8 @@
 package com.cbat.usermanager.controller;
 
 
-import com.cbat.exceptionhandler.bean.Response;
-import com.cbat.exceptionhandler.util.Assert;
-import com.cbat.exceptionhandler.util.ResponseUtil;
+
+import com.cbat.exception.util.Assert;
 import com.cbat.usermanager.bean.PermissionBean;
 import com.cbat.usermanager.bean.RoleBean;
 import com.cbat.usermanager.bean.RoleToPermisBean;
@@ -12,12 +11,16 @@ import com.cbat.usermanager.service.IPermisService;
 import com.cbat.usermanager.service.IRoleService;
 import com.cbat.usermanager.service.IRoleToPermisService;
 import com.cbat.usermanager.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+@Api(tags = "角色控制")
 @RestController
 public class RoleController {
     @Autowired
@@ -28,39 +31,41 @@ public class RoleController {
     IRoleToPermisService roleToPermisService;
     @Autowired
     IUserService userService;
-    @RequestMapping(value = "/addRole",name = "添加角色")
-    public Response addRole(RoleBean roleBean){
-        Assert.notEmpty(roleBean.getRoleName(),"E00000010");
+    @ApiOperation("添加角色")
+    @PostMapping(value = "/addRole",name = "添加角色")
+    public void addRole(RoleBean roleBean){
+        Assert.notEmpty(roleBean.getRoleName(),"角色名称不能为空");
         roleService.addRole(roleBean);
-        return ResponseUtil.success();
     }
-    @RequestMapping(value = "/addPermisToRole",name = "向角色添加权限")
-    public Response addPermisToRole(RoleToPermisBean roleToPermisBean){
+    @ApiOperation("向角色添加权限")
+    @PostMapping(value = "/addPermisToRole",name = "向角色添加权限")
+    public void addPermisToRole(RoleToPermisBean roleToPermisBean){
         roleToPermisService.add(roleToPermisBean);
-        return ResponseUtil.success();
     }
-    @RequestMapping(value = "/addPermisesToRole",name = "向角色批量添加权限")
-    public Response addPermisesToRole(List<RoleToPermisBean> roleToPermises){
+    @ApiOperation("向角色批量添加权限")
+    @PostMapping(value = "/addPermisesToRole",name = "向角色批量添加权限")
+    public void addPermisesToRole(List<RoleToPermisBean> roleToPermises){
         roleToPermisService.addAll(roleToPermises);
-        return ResponseUtil.success();
     }
-    @RequestMapping(value = "/delRole",name = "删除角色")
-    public Response delRole(String roleId){
-        Assert.notEmpty(roleId,"E00000001");
+    @ApiOperation("删除角色")
+    @PostMapping(value = "/delRole",name = "删除角色")
+    public void delRole(@ApiParam("角色编号") String roleId){
+        Assert.notEmpty(roleId,"角色编号不能为空");
         roleService.del(roleId);
-        return ResponseUtil.success();
     }
-    @RequestMapping(value = "/findPermisesByRoleId",name = "查询角色所拥有的权限")
-    public Response findPermisesByRoleId(String roleId){
-        Assert.notEmpty(roleId,"E00000001");
+    @ApiOperation("查询角色所拥有的权限")
+    @PostMapping(value = "/findPermisesByRoleId",name = "查询角色所拥有的权限")
+    public List<PermissionBean> findPermisesByRoleId(@ApiParam("角色编号") String roleId){
+        Assert.notEmpty(roleId,"角色编号不能为空");
         List<PermissionBean> permises = permisService.getPermises(roleId);
-        return ResponseUtil.success(permises);
+        return permises;
     }
-    @RequestMapping(value = "/findUsersByRoleId",name = "查询拥有该角色的所有用户")
-    public Response findUsersByRoleId(String roleId){
-        Assert.notEmpty(roleId,"E00000001");
+    @ApiOperation("查询拥有该角色的所有用户")
+    @PostMapping(value = "/findUsersByRoleId",name = "查询拥有该角色的所有用户")
+    public List<UserBean> findUsersByRoleId(@ApiParam("角色编号") String roleId){
+        Assert.notEmpty(roleId,"角色编号不能为空");
         List<UserBean> users = userService.getUsersByRoleId(roleId);
-        return ResponseUtil.success(users);
+        return users;
     }
 
 }

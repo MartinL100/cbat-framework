@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.cbat.framework</groupId>
-            <artifactId>exception-handler</artifactId>
+            <artifactId>cbat-exception</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
