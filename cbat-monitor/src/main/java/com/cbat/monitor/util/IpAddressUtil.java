@@ -1,10 +1,18 @@
 package com.cbat.monitor.util;
 
+import com.cbat.monitor.vo.AliyIpVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 public class IpAddressUtil {
+    @Autowired
+    private   RestTemplate restTemplate;
+    private static IpAddressUtil ipAddressUtil ;
+
     /**
      * 从request中获取ip地址
      * @param request
@@ -49,8 +57,15 @@ public class IpAddressUtil {
      * @param ip
      * @return
      */
-    public static String ipToArea(String ip){
+    public static AliyIpVO ipToArea(String ip){
+        AliyIpVO forObject = ipAddressUtil.restTemplate
+                .getForObject("http://taobao.com/service/getIpInfo.php?ip={ip}", AliyIpVO.class,ip);
+        return forObject;
+    }
 
-        return "";
+
+    @PostConstruct
+    void init(){
+        ipAddressUtil = this;
     }
 }

@@ -23,8 +23,10 @@ public class VisitBean {
     private String visitId;
     @ApiModelProperty("访问IP")
     private String visitIp;
-    @ApiModelProperty("访问地区")
-    private String visitArea;
+    @ApiModelProperty("访问省份")
+    private String region;
+    @ApiModelProperty("访问城市")
+    private String city;
     @Transient
     @ApiModelProperty("访问时间查询起点")
     private String visitStartTime;
@@ -35,12 +37,38 @@ public class VisitBean {
     private String visitTime;
     @ApiModelProperty("访问状态")
     private String statu;
+    @ApiModelProperty("访问类型")
+    private String visitType;
     @ApiModelProperty("异常信息")
     private String expInfo;
     @ApiModelProperty("访问路径")
     private String path;
     @ApiModelProperty("最后修改时间")
     private Timestamp lstModTime;
+
+    public String getVisitStartTime() {
+        return visitStartTime;
+    }
+
+    public void setVisitStartTime(String visitStartTime) {
+        this.visitStartTime = visitStartTime;
+    }
+
+    public String getVisitEndTime() {
+        return visitEndTime;
+    }
+
+    public void setVisitEndTime(String visitEndTime) {
+        this.visitEndTime = visitEndTime;
+    }
+
+    public String getVisitType() {
+        return visitType;
+    }
+
+    public void setVisitType(String visitType) {
+        this.visitType = visitType;
+    }
 
     public String getVisitId() {
         return visitId;
@@ -58,12 +86,20 @@ public class VisitBean {
         this.visitIp = visitIp;
     }
 
-    public String getVisitArea() {
-        return visitArea;
+    public String getRegion() {
+        return region;
     }
 
-    public void setVisitArea(String visitArea) {
-        this.visitArea = visitArea;
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getVisitTime() {

@@ -3,6 +3,7 @@ package com.cbat.monitor.service;
 import com.cbat.monitor.bean.VisitBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +14,13 @@ public interface IVisitService {
      * @param request mvc请求
      */
     VisitBean save(HttpServletRequest request);
+
+    /**
+     * 保存页面访问信息
+     * @param request
+     * @return
+     */
+    VisitBean savePage(HttpServletRequest request);
 
     /**
      * 动态查询访问信息集合

@@ -6,8 +6,10 @@ import com.cbat.exception.bean.exception.CbatServiceException;
 import com.cbat.exception.bean.response.BaseResponse;
 import com.cbat.exception.util.ResponseUtil;
 import com.cbat.monitor.bean.VisitBean;
+import com.cbat.monitor.config.CbatMonitorHandlerInterceptor;
 import com.cbat.monitor.constans.VisitStatu;
 import com.cbat.monitor.service.IVisitService;
+import com.cbat.monitor.util.CbatMonitorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,23 @@ import java.sql.Timestamp;
 @ControllerAdvice
 public class CbatExceptionHandler {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    IVisitService visitService;
     @ExceptionHandler(CbatIllegalStateException.class)
     public BaseResponse exceptionHandler(HttpServletRequest request , CbatIllegalStateException e){
-        updateRecord(request,e.getResponse().getMsg());
+        CbatMonitorUtil.updateMonitorToVisitFaile(request,e.getResponse().getMsg());
         BaseResponse response = e.getResponse();
         logger.warn(e.getMessage(),e);
         return response;
     }
     @ExceptionHandler(CbatServiceException.class)
     public BaseResponse exceptionHandler(HttpServletRequest request , CbatServiceException e){
-        updateRecord(request,e.getResponse().getMsg());
+        CbatMonitorUtil.updateMonitorToVisitFaile(request,e.getResponse().getMsg());
         BaseResponse response = e.getResponse();
         logger.error(e.getMessage(),e);
         return response;
     }
     @ExceptionHandler(CbatRuntimeException.class)
     public BaseResponse exceptionHandler(HttpServletRequest request , CbatRuntimeException e){
-        updateRecord(request,e.getResponse().getMsg());
+        CbatMonitorUtil.updateMonitorToVisitFaile(request,e.getResponse().getMsg());
         BaseResponse response = e.getResponse();
         logger.error(e.getMessage(),e);
         return response;
@@ -48,18 +48,10 @@ public class CbatExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public BaseResponse exceptionHandler(HttpServletRequest request , Exception e){
-        updateRecord(request,"系统发生异常");
+        CbatMonitorUtil.updateMonitorToVisitFaile(request,"系统发生异常");
         logger.error("系统发生异常:",e);
         return ResponseUtil.fail();
     }
 
-    private void updateRecord(HttpServletRequest request,String msg){
-       VisitBean visitBean= (VisitBean) request.getAttribute(CbatHandlerInterceptor.VISIT_INFO);
-       if (null!=visitBean){
-           visitBean.setStatu(VisitStatu.FAILE);
-           visitBean.setExpInfo(msg);
-           visitBean.setLstModTime(new Timestamp(System.currentTimeMillis()));
-           visitService.update(visitBean);
-       }
-    }
+
 }
